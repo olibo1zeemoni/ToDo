@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import MessageUI
 
-class ToDoDetailTableViewController: UITableViewController {
+class ToDoDetailTableViewController: UITableViewController, MFMailComposeViewControllerDelegate {
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var isCompleteButton: UIButton!
@@ -15,6 +16,8 @@ class ToDoDetailTableViewController: UITableViewController {
     @IBOutlet weak var dueDatePickerView: UIDatePicker!
     @IBOutlet weak var notesTextView: UITextView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var emailAddress: UITextField!
+    @IBOutlet weak var emailButton: UIButton!
     
     var todo: Todo?
     override func viewDidLoad() {
@@ -34,17 +37,24 @@ class ToDoDetailTableViewController: UITableViewController {
         }
         updateDueDateLabel(date: dueDatePickerView.date)
         updateSaveButtonState()
+        monitorEmailButtonState()
 
     }
     func updateSaveButtonState(){
         let shouldEnableSaveButton = titleTextField.text?.isEmpty == false
         saveButton.isEnabled = shouldEnableSaveButton
+        monitorEmailButtonState()
     }
     
 
     @IBAction func textEditingChanged(_ sender: UITextField){
         updateSaveButtonState()
     }
+    
+    @IBAction func emailEditingChanged(_ sender: UITextField) {
+        monitorEmailButtonState()
+    }
+    
 
     @IBAction func returnPressed(_ sender: UITextField) {
         sender.resignFirstResponder()
@@ -114,9 +124,48 @@ class ToDoDetailTableViewController: UITableViewController {
             todo = Todo(name: title, dueDate: date, note: notes, isComplete: isComplete)
         }
         
-        
-        
     }
+    func monitorEmailButtonState(){
+        let shouldEmailButtonBeEnabled = saveButton.isEnabled == true && emailAddress.text?.isEmpty == false
+        emailButton.isEnabled = shouldEmailButtonBeEnabled
+    }
+    
+        
+    @IBAction func emailButtonPressed(_ sender: UIButton) {
+        if !MFMailComposeViewController.canSendMail() {
+            print("Mail services are not available")
+            return
+        }
+        let composeVC = MFMailComposeViewController()
+        composeVC.mailComposeDelegate = self
+        
+        //configure fields of interface
+        composeVC.setSubject("Hello")
+        let email = emailAddress.text!
+        composeVC.setToRecipients(["gaboahene1@gmail.com",email])
+        composeVC.setMessageBody("Hello from this side \n name: \(todo!.name) \n Due Date: \(todo!.dueDate) \n Completed: \(todo!.isComplete) \n note: \(todo?.note ?? "none") ", isHTML: false)
+        
+        //adding image attachment
+      /*  if let image = imageView.image, let jpegData = image.jpegData(compressionQuality: 0.9){
+            composeVC.addAttachmentData(jpegData, mimeType: "image/jpg", fileName: "photo.jpg")} */
+        
+        //present the view controller modally
+        self.present(composeVC, animated: true, completion: nil)
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        if result == MFMailComposeResult.sent{
+            print("sent successfully")
+        } else {
+            print("please try again")
+        }
+        //dismiss the mail compose view controller
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
+    
 
    
 

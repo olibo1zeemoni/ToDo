@@ -31,6 +31,7 @@ class ToDoCell: UITableViewCell {
     
     @IBAction func isCompleteButtonTapped(_ sender: UIButton) {
         delegate?.checkmarkTapped(sender: self)
+        
     }
     
 
