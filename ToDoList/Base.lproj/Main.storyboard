@@ -233,6 +233,7 @@
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
                                                         <action selector="emailEditingChanged:" destination="CYM-gm-a0g" eventType="editingChanged" id="Bfl-e1-TEz"/>
+                                                        <action selector="returnPressed:" destination="CYM-gm-a0g" eventType="primaryActionTriggered" id="E2i-2M-GOT"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>

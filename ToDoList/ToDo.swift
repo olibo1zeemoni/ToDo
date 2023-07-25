@@ -8,7 +8,7 @@
 import UIKit
 
 struct Todo: Equatable, Codable{
-    let id = UUID()
+    var id = UUID()
     var name: String
     var dueDate: Date
     var note: String?
