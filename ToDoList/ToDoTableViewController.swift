@@ -47,6 +47,7 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
         let todo = todos[indexPath.row]
         cell.titleLabel.text = todo.name
         cell.isCompleteButton.isSelected = todo.isComplete
+        cell.dueDateLabel.text = Todo.dueDateFormatter.string(from: todo.dueDate)
 
         return cell
     }
@@ -143,7 +144,7 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
     }
     */
 
-/*
+
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
@@ -152,7 +153,7 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
         tableView.reloadData()
     }
     
-*/
+
     
     // Override to support conditional rearranging of the table view.
     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {

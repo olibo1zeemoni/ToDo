@@ -16,6 +16,7 @@ class ToDoCell: UITableViewCell {
 
     @IBOutlet weak var isCompleteButton: UIButton!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var dueDateLabel: UILabel!
     
 
     override func awakeFromNib() {
