@@ -30,7 +30,14 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
             todos = Todo.loadSampleTodos()
         }
         navigationItem.leftBarButtonItem = editButtonItem
-
+        
+        self.tableView.separatorColor = .black
+        let view = UIView()
+        view.frame = self.tableView.frame
+        view.backgroundColor = UIColor.lightGray
+        self.tableView.backgroundView = view
+        self.tableView.tintColor = .black
+            
         
     }
 
@@ -48,6 +55,7 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
         cell.titleLabel.text = todo.name
         cell.isCompleteButton.isSelected = todo.isComplete
         cell.dueDateLabel.text = Todo.dueDateFormatter.string(from: todo.dueDate)
+        cell.contentView.backgroundColor = .darkGray
 
         return cell
     }
