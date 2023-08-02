@@ -21,7 +21,7 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //TODO: Add sorting and search to APP
        
         
         if let savedTodos = Todo.loadTodos(){
